@@ -1,12 +1,12 @@
 {
-	"name": "api.direkt.bahn.guru",
+	"name": "api.direkt-bahn",
 	"version": "0.0.0",
 	"private": true,
-	"homepage": "https://github.com/juliuste/api.direkt.bahn.guru",
-	"bugs": "https://github.com/juliuste/api.direkt.bahn.guru/issues",
-	"repository": "juliuste/api.direkt.bahn.guru",
+	"homepage": "https://github.com/schaerfo/api.direkt.bahn.guru",
+	"bugs": "https://github.com/schaerfo/api.direkt.bahn.guru/issues",
+	"repository": "schaerfo/api.direkt.bahn.guru",
 	"license": "ISC",
-	"author": "Julius Tens <mail@juliustens.eu>",
+	"author": "Christian Schärf <direkt-bahn@christian.schaerf.email>",
 	"type": "module",
 	"scripts": {
 		"build-stations": "node src/build-stations.js > src/stations.json",
