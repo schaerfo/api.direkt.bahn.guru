@@ -116,9 +116,19 @@ export default async (req, res, next) => {
 
 		const queue = new Queue({ concurrency: 4 })
 		const results = await queue.addAll(dates.map(d => () => reachableForDay(d, id, localTrainsOnly)))
+		const frequencies = l.map(results, dayResult => {
+			const counts = l.countBy(dayResult, 'id')
+			return Object.keys(counts).map(key => [key, counts[key]]) // Use a list instead of object to we can use l.fromPairs later
+		})
+		const mergedFrequencies = l.union(...frequencies)
+		const uniqFrequencies = l.fromPairs(l.uniqBy(l.sortBy(mergedFrequencies, x => x[1]), x => x[0]))
 		const mergedResults = l.union(...results)
 		const uniqResults = l.uniqBy(l.sortBy(mergedResults, x => x.duration), x => x.id)
-		res.json(uniqResults)
+		const uniqResultsWithFrequencies = l.map(uniqResults, result => {
+			result.frequency = uniqFrequencies[result.id]
+			return result
+		})
+		res.json(uniqResultsWithFrequencies)
 	} catch (error) {
 		console.error(error)
 		return res.status(500).json({ error: true, message: 'internal error' })
